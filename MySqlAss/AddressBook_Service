@@ -1,0 +1,230 @@
+****Uc1****
+
+mysql> show databases;
++---------------------+
+| Database            |
++---------------------+
+| information_schema  |
+| addressbook_service |
+| admission_service   |
+| mysql               |
+| payroll_service     |
+| performance_schema  |
+| sys                 |
++---------------------+
+7 rows in set (0.00 sec)
+
+mysql> use addressbook_service;
+Database changed
+
+***Uc2***
+
+mysql> create table addressbook
+    -> (
+    ->  id      int(11) not null Auto_Increment,
+    ->  fname   varchar(20) not null,
+    ->  lname   varchar(20) not null,
+    ->  address varchar(35),
+    ->  city    varchar(20),
+    ->  state   varchar(20),
+    ->  zip     int(5),
+    ->  phone_no int(10),
+    ->  email   varchar(25),
+    ->  primary key(id));
+Query OK, 0 rows affected (0.96 sec)
+
+mysql> desc addressbook;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| fname    | varchar(20) | NO   |     | NULL    |                |
+| lname    | varchar(20) | NO   |     | NULL    |                |
+| address  | varchar(35) | YES  |     | NULL    |                |
+| city     | varchar(20) | YES  |     | NULL    |                |
+| state    | varchar(20) | YES  |     | NULL    |                |
+| zip      | int(5)      | YES  |     | NULL    |                |
+| phone_no | int(10)     | YES  |     | NULL    |                |
+| email    | varchar(25) | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+9 rows in set (0.08 sec)
+
+mysql> show tables;
++-------------------------------+
+| Tables_in_addressbook_service |
++-------------------------------+
+| addressbook                   |
++-------------------------------+
+1 row in set (0.00 sec)
+
+***Uc3***
+
+mysql> insert into addressbook(fname, lname, address, city, state, zip, phone_no
+, email) values('Pratik', 'Bhivgade', 'Bagadganj', 'Nagpur', 'Maharstra', 42523,
+ 959541235, 'pratik@gmail.com');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into addressbook(fname, lname, address, city, state, zip, phone_no
+, email) values('Prakash', 'Zade', 'Nandanvan', 'Pune', 'Maharstra', 23543, 8562
+3558, 'prakash@gmail.com'), ('Nikhil', 'Bhushan', 'zaripatka', 'Nashik', 'Mahars
+tra', 42569, 845695235, 'nikhil@gmail.com');
+Query OK, 2 rows affected (0.12 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook\G;
+*************************** 1. row ***************************
+      id: 1
+   fname: Pratik
+   lname: Bhivgade
+ address: Bagadganj
+    city: Nagpur
+   state: Maharstra
+     zip: 42523
+phone_no: 959541235
+   email: pratik@gmail.com
+*************************** 2. row ***************************
+      id: 2
+   fname: Prakash
+   lname: Zade
+ address: Nandanvan
+    city: Pune
+   state: Maharstra
+     zip: 23543
+phone_no: 85623558
+   email: prakash@gmail.com
+*************************** 3. row ***************************
+      id: 3
+   fname: Nikhil
+   lname: Bhushan
+ address: zaripatka
+    city: Nashik
+   state: Maharstra
+     zip: 42569
+phone_no: 845695235
+   email: nikhil@gmail.com
+3 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+***Uc4***
+
+mysql> update addressbook set city='Amravati' where fname='Pratik';
+Query OK, 1 row affected (0.18 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set zip=45896 where fname='Nikhil';
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from addressbook\G;
+*************************** 1. row ***************************
+      id: 1
+   fname: Pratik
+   lname: Bhivgade
+ address: Bagadganj
+    city: Amravati
+   state: Maharstra
+     zip: 42523
+phone_no: 959541235
+   email: pratik@gmail.com
+*************************** 2. row ***************************
+      id: 2
+   fname: Prakash
+   lname: Zade
+ address: Nandanvan
+    city: Pune
+   state: Maharstra
+     zip: 23543
+phone_no: 85623558
+   email: prakash@gmail.com
+*************************** 3. row ***************************
+      id: 3
+   fname: Nikhil
+   lname: Bhushan
+ address: zaripatka
+    city: Nashik
+   state: Maharstra
+     zip: 45896
+phone_no: 845695235
+   email: nikhil@gmail.com
+3 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+***Uc5***
+
+mysql> delete from addressbook where fname='Nikhil';
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select * from addressbook;
++----+---------+----------+-----------+----------+-----------+-------+----------
+-+-------------------+
+| id | fname   | lname    | address   | city     | state     | zip   | phone_no
+ | email             |
++----+---------+----------+-----------+----------+-----------+-------+----------
+-+-------------------+
+|  1 | Pratik  | Bhivgade | Bagadganj | Amravati | Maharstra | 42523 | 959541235
+ | pratik@gmail.com  |
+|  2 | Prakash | Zade     | Nandanvan | Pune     | Maharstra | 23543 |  85623558
+ | prakash@gmail.com |
++----+---------+----------+-----------+----------+-----------+-------+----------
+-+-------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from addressbook\G;
+*************************** 1. row ***************************
+      id: 1
+   fname: Pratik
+   lname: Bhivgade
+ address: Bagadganj
+    city: Amravati
+   state: Maharstra
+     zip: 42523
+phone_no: 959541235
+   email: pratik@gmail.com
+*************************** 2. row ***************************
+      id: 2
+   fname: Prakash
+   lname: Zade
+ address: Nandanvan
+    city: Pune
+   state: Maharstra
+     zip: 23543
+phone_no: 85623558
+   email: prakash@gmail.com
+2 rows in set (0.00 sec)
+
+ERROR:
+No query specified
+
+****Uc6****
+
+mysql> select * from addressbook where city='Amravati';
++----+--------+----------+-----------+----------+-----------+-------+-----------
++------------------+
+| id | fname  | lname    | address   | city     | state     | zip   | phone_no
+| email            |
++----+--------+----------+-----------+----------+-----------+-------+-----------
++------------------+
+|  1 | Pratik | Bhivgade | Bagadganj | Amravati | Maharstra | 42523 | 959541235
+| pratik@gmail.com |
++----+--------+----------+-----------+----------+-----------+-------+-----------
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from addressbook where state='Maharstra';
++----+---------+----------+-----------+----------+-----------+-------+----------
+-+-------------------+
+| id | fname   | lname    | address   | city     | state     | zip   | phone_no
+ | email             |
++----+---------+----------+-----------+----------+-----------+-------+----------
+-+-------------------+
+|  1 | Pratik  | Bhivgade | Bagadganj | Amravati | Maharstra | 42523 | 959541235
+ | pratik@gmail.com  |
+|  2 | Prakash | Zade     | Nandanvan | Pune     | Maharstra | 23543 |  85623558
+ | prakash@gmail.com |
++----+---------+----------+-----------+----------+-----------+-------+----------
+-+-------------------+
+2 rows in set (0.00 sec)
